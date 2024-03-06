@@ -20,4 +20,16 @@ public class MemberConverter {
                 .created_at(member.getCreatedAt())
                 .build();
     }
+
+    public Member toMember(MemberRequestDTO.JoinMemberDTO joinMemberDTO){
+        Member member = Member.builder()
+                .username(joinMemberDTO.getUsername())
+                .password(passwordEncoder.encode(joinMemberDTO.getPassword()))
+                .name(joinMemberDTO.getName())
+                .nickName(joinMemberDTO.getNickName())
+                .email(joinMemberDTO.getEmail())
+                .role(joinMemberDTO.getRole())
+                .age(joinMemberDTO.getAge()).build();
+        return member;
+    }
 }

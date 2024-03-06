@@ -22,17 +22,15 @@ public class MemberServiceImpl implements MemberService{
 
     /**
      * front 에서 정보 전달
-     * @param joinMemberDTO
+     * @param member
      * @return
      */
     @Override
     @Transactional
-    public Member joinMember(MemberRequestDTO.JoinMemberDTO joinMemberDTO) {
-
-        Member member = joinMemberDTO.toEntity();
-
+    public Member joinMember(Member member){
         if(memberRepository.existsByEmail(member.getEmail()) || memberRepository.existsByUsername(member.getUsername())){
-            return memberRepository.findById(member.getId()).orElseThrow(() -> new MemberHandler(ErrorStatus.MEMBER_NOT_FOUND));
+            return memberRepository.findById(member.getId()).orElseThrow(()
+                    -> new MemberHandler(ErrorStatus.MEMBER_NOT_FOUND));
         }
 
         return memberRepository.save(member);

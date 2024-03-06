@@ -17,11 +17,11 @@ public class MemberRestController {
     private final MemberService memberService;
     private final MemberConverter memberConverter;
 
-
     @PostMapping("/join")
     public ApiResponse<MemberResponseDTO.JoinResultDTO> joinMember(@RequestBody MemberRequestDTO.JoinMemberDTO joinMemberDTO){
-        Member member = memberService.joinMember(joinMemberDTO);
-        return ApiResponse.of(SuccessStatus.MEMBER_JOIN, memberConverter.toJoinResultDTO(member));
+        Member member = memberConverter.toMember(joinMemberDTO);
+        Member joinMember = memberService.joinMember(member);
+        return ApiResponse.of(SuccessStatus.MEMBER_JOIN, memberConverter.toJoinResultDTO(joinMember));
     }
 }
 
