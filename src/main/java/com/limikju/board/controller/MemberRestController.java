@@ -23,5 +23,11 @@ public class MemberRestController {
         Member joinMember = memberService.joinMember(member);
         return ApiResponse.of(SuccessStatus.MEMBER_JOIN, memberConverter.toJoinResultDTO(joinMember));
     }
+
+    @PostMapping("/login")
+    public ApiResponse<MemberResponseDTO.LoginResultDTO> login(@RequestBody MemberRequestDTO.LoginMemberDTO loginMemberDTO){
+        String token = memberService.login(loginMemberDTO.getUsername(), loginMemberDTO.getPassword());
+        return ApiResponse.of(SuccessStatus.MEMBER_LOGIN, memberConverter.toLoginResultDTO(token));
+    }
 }
 

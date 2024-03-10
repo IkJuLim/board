@@ -16,4 +16,12 @@ public class MemberResponseDTO {
         private Long member_id;
         private LocalDateTime created_at;
     }
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class LoginResultDTO {
+        private String token;
+    }
 }

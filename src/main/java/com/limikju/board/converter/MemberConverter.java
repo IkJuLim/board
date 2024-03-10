@@ -32,4 +32,10 @@ public class MemberConverter {
                 .age(joinMemberDTO.getAge()).build();
         return member;
     }
+
+    public MemberResponseDTO.LoginResultDTO toLoginResultDTO(String token) {
+        return MemberResponseDTO.LoginResultDTO.builder()
+                .token(token)
+                .build();
+    }
 }

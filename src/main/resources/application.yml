@@ -23,3 +23,7 @@ logging:
           http11: debug
       hiberante:
         SQL: debug
+
+jwt:
+  token:
+    secret-key: ${jwt_secret_key}

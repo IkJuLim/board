@@ -86,6 +86,72 @@ class MemberRestControllerTest {
                         .content(objectMapper.writeValueAsString(memberDto))
                         .with(csrf()))
                 .andDo(print())
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isConflict());
+    }
+
+    @Test
+    @WithMockUser
+    void login_성공() throws Exception {
+        // given
+        MemberRequestDTO.LoginMemberDTO memberDto = new MemberRequestDTO.LoginMemberDTO(
+                "Username",
+                "1234567890"
+        );
+
+        // when
+        when(memberService.login(any(), any()))
+                .thenReturn("token");
+
+        // then
+        mockMvc.perform(post("/api/v1/members/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(memberDto))
+                        .with(csrf()))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @WithMockUser
+    void login_실패_id_없음() throws Exception {
+        // given
+        MemberRequestDTO.LoginMemberDTO memberDto = new MemberRequestDTO.LoginMemberDTO(
+                "Username",
+                "1234567890"
+        );
+
+        // when
+        when(memberService.login(any(), any()))
+                .thenThrow(new MemberHandler(ErrorStatus.MEMBER_NOT_FOUND));
+
+        // then
+        mockMvc.perform(post("/api/v1/members/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(memberDto))
+                        .with(csrf()))
+                .andDo(print())
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    @WithMockUser
+    void login_실패_pw_틀림() throws Exception {
+        // given
+        MemberRequestDTO.LoginMemberDTO memberDto = new MemberRequestDTO.LoginMemberDTO(
+                "Username",
+                "1234567890"
+        );
+
+        // when
+        when(memberService.login(any(), any()))
+                .thenThrow(new MemberHandler(ErrorStatus.MEMBER_INVALID_PASSWORD));
+
+        // then
+        mockMvc.perform(post("/api/v1/members/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(memberDto))
+                        .with(csrf()))
+                .andDo(print())
+                .andExpect(status().isUnauthorized());
     }
 }

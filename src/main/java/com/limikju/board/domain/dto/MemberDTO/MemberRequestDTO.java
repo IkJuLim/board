@@ -15,7 +15,6 @@ public class MemberRequestDTO {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class JoinMemberDTO {
-
         private String username;
         private String password;
         private String name;
@@ -23,5 +22,13 @@ public class MemberRequestDTO {
         private String email;
         private MemberRole role;
         private Integer age;
+    }
+
+    @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class LoginMemberDTO {
+        private String username;
+        private String password;
     }
 }

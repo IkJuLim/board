@@ -5,4 +5,7 @@ import com.limikju.board.domain.dto.MemberDTO.MemberRequestDTO;
 
 public interface MemberService {
     Member joinMember(Member member);
+
+    String login(String userName, String password);
 }
+
